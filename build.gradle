@@ -1,4 +1,4 @@
-group 'com.kotato'
+group 'com.github.RamonAranda'
 version '1.0-SNAPSHOT'
 
 buildscript {
@@ -19,6 +19,7 @@ buildscript {
 
 apply plugin: 'kotlin'
 apply plugin: "java"
+apply plugin: 'maven'
 
 repositories {
     mavenCentral()
