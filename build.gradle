@@ -34,7 +34,6 @@ dependencies {
     compile "org.axonframework:axon-spring-boot-starter:3.0.5"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
-    compile "org.springframework.boot:spring-boot-starter"
 
     testCompile "com.github.javafaker:javafaker:0.12"
     testCompile "com.github.sbrannen:spring-test-junit5:1.0.0"
