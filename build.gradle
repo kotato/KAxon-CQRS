@@ -1,4 +1,4 @@
-group 'com.github.RamonAranda'
+group 'com.github.kotato'
 version '1.0-SNAPSHOT'
 
 buildscript {
