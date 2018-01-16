@@ -2,21 +2,23 @@ package com.kotato.cqrs.query_bus.behaviour
 
 import com.github.javafaker.Faker
 import com.kotato.cqrs.domain.query.Query
+import com.kotato.cqrs.domain.query.ask
 import com.kotato.cqrs.infrastructure.query_bus.QueryBusAxon
 import com.kotato.cqrs.query_bus.stub.TestQuery
-import org.axonframework.commandhandling.CommandMessage
-import org.axonframework.commandhandling.NoHandlerForCommandException
-import org.axonframework.commandhandling.SimpleCommandBus
-import org.axonframework.commandhandling.gateway.DefaultCommandGateway
 import org.axonframework.messaging.MessageHandler
+import org.axonframework.queryhandling.DefaultQueryGateway
+import org.axonframework.queryhandling.NoHandlerForQueryException
+import org.axonframework.queryhandling.QueryMessage
+import org.axonframework.queryhandling.SimpleQueryBus
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import java.util.concurrent.ExecutionException
 import kotlin.test.assertFailsWith
 
 class QueryBusTest {
-    private val simpleCommandBus = SimpleCommandBus()
-    private val gateway = DefaultCommandGateway(simpleCommandBus)
+    private val simpleQueryBus = SimpleQueryBus()
+    private val gateway = DefaultQueryGateway(simpleQueryBus)
     private val queryBus = QueryBusAxon(gateway)
 
     @BeforeEach
@@ -26,13 +28,14 @@ class QueryBusTest {
 
     @Test
     fun `it should send a command and fail because no handlers`() {
-        assertFailsWith<NoHandlerForCommandException> { queryBus.ask<String>(TestQuery()) }
+        assertFailsWith<ExecutionException> { queryBus.ask<String>(TestQuery()) }
+                .let { assertEquals(it.cause!!::class, NoHandlerForQueryException::class) }
     }
 
     @Test
     fun `it should send a query and handle successfully`() {
         Faker().pokemon().name()
-                .also { simpleCommandBus.subscribe(TestQuery::class.java.name, TestQueryHandler(it)) }
+                .also { simpleQueryBus.subscribe(TestQuery::class.java.name, it::class.java, TestQueryHandler(it)) }
                 .let { expectedResponse ->
                     TestQuery()
                             .also { assertEquals(expectedResponse, queryBus.ask<String>(it)) }
@@ -44,8 +47,8 @@ class QueryBusTest {
                 }
     }
 
-    private class TestQueryHandler<out T>(private val response: T) : MessageHandler<CommandMessage<*>> {
-        override fun handle(message: CommandMessage<*>): T {
+    private class TestQueryHandler<out T>(private val response: T) : MessageHandler<QueryMessage<*, *>> {
+        override fun handle(message: QueryMessage<*, *>): T {
             queries.add(message.payload as Query)
             return response
         }

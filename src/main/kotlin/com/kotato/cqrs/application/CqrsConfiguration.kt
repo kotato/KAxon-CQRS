@@ -5,6 +5,7 @@ import com.kotato.cqrs.infrastructure.command_bus.CommandBusAxon
 import com.kotato.cqrs.domain.query.QueryBus
 import com.kotato.cqrs.infrastructure.query_bus.QueryBusAxon
 import org.axonframework.commandhandling.gateway.CommandGateway
+import org.axonframework.queryhandling.QueryGateway
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -19,6 +20,6 @@ open class CqrsConfiguration {
 
     @Bean
     @ConditionalOnClass(value = EnableCqrs::class)
-    open fun cqrsQueryBus(commandGateway: CommandGateway): QueryBus =
-        QueryBusAxon(commandGateway)
+    open fun cqrsQueryBus(queryGateway: QueryGateway): QueryBus =
+        QueryBusAxon(queryGateway)
 }
