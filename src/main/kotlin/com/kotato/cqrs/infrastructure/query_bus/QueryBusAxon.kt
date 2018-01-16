@@ -8,6 +8,8 @@ import kotlin.reflect.KClass
 class QueryBusAxon(private val gateway: QueryGateway) : QueryBus {
     override fun <T> ask(query: Query, klass: KClass<*>): T {
         @Suppress("UNCHECKED_CAST")
-        return gateway.send(query, klass.java).get() as T
+        return gateway.send(query,
+                            klass.javaPrimitiveType.takeIf { null !== it } ?: klass.java)
+                .get() as T
     }
 }
