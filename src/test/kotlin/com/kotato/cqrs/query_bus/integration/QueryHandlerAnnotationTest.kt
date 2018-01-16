@@ -3,10 +3,11 @@ package com.kotato.cqrs.query_bus.integration
 import com.kotato.cqrs.domain.query.Query
 import com.kotato.cqrs.domain.query.QueryBus
 import com.kotato.cqrs.domain.query.QueryHandler
+import com.kotato.cqrs.domain.query.ask
 import com.kotato.cqrs.infrastructure.query_bus.QueryBusAxon
 import com.kotato.cqrs.infrastructure.query_bus.spring.AnnotationQueryHandlerDriven
 import com.kotato.cqrs.query_bus.stub.TestQuery
-import org.axonframework.commandhandling.gateway.CommandGateway
+import org.axonframework.queryhandling.QueryGateway
 import org.axonframework.spring.config.EnableAxon
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -24,8 +25,8 @@ import javax.inject.Inject
 @ContextConfiguration
 class QueryHandlerAnnotationTest {
     @Inject
-    private lateinit var commandGateway: CommandGateway
-    private val queryBus: QueryBus by lazy { QueryBusAxon(commandGateway) }
+    private lateinit var queryGateway: QueryGateway
+    private val queryBus: QueryBus by lazy { QueryBusAxon(queryGateway) }
 
     @BeforeEach
     fun setUp() {
