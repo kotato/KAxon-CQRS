@@ -28,8 +28,7 @@ class QueryBusTest {
 
     @Test
     fun `it should send a command and fail because no handlers`() {
-        assertFailsWith<ExecutionException> { queryBus.ask<String>(TestQuery()) }
-                .let { assertEquals(it.cause!!::class, NoHandlerForQueryException::class) }
+        assertFailsWith<NoHandlerForQueryException> { queryBus.ask<String>(TestQuery()) }
     }
 
     @Test
