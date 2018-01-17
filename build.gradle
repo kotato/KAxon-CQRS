@@ -30,6 +30,10 @@ repositories {
 ext.junitPlatformVersion = '1.0.1'
 ext.junitJupiterVersion  = '5.0.1'
 
+bootRepackage {
+    enabled = false
+}
+
 dependencies {
     compile "javax.inject:javax.inject:1"
     compile "org.axonframework:axon-spring-boot-starter:3.1"
