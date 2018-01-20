@@ -1,7 +1,7 @@
 package com.kotato.cqrs.infrastructure.command_bus.spring
 
+import com.kotato.cqrs.domain.command.CommandHandler
 import org.axonframework.commandhandling.AnnotationCommandHandlerAdapter
-import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.commandhandling.CommandMessage
 import org.axonframework.commandhandling.SupportedCommandNamesAware
 import org.axonframework.messaging.MessageHandler
