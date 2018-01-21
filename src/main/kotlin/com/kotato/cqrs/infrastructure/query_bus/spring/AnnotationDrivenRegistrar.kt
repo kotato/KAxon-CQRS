@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ImportBeanDefinitionRegistrar
 import org.springframework.core.type.AnnotationMetadata
 
 class AnnotationDrivenRegistrar : ImportBeanDefinitionRegistrar {
-    private val QUERY_HANDLER_BEAN_NAME = "__axon-annotation-query-handler-bean-post-processor"
+    private val QUERY_HANDLER_BEAN_NAME = "__custom-axon-annotation-query-handler-bean-post-processor"
 
     override fun registerBeanDefinitions(importingClassMetadata: AnnotationMetadata, registry: BeanDefinitionRegistry) {
         registerAnnotationQueryHandlerBeanPostProcessor(registry)
