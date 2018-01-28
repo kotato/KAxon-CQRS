@@ -1,11 +1,11 @@
 package com.kotato.cqrs.command_bus.integration
 
+import com.kotato.cqrs.application.CqrsConfiguration
 import com.kotato.cqrs.command_bus.stub.TestCommand
 import com.kotato.cqrs.domain.command.Command
 import com.kotato.cqrs.domain.command.CommandBus
 import com.kotato.cqrs.domain.command.CommandHandler
 import com.kotato.cqrs.infrastructure.command_bus.CommandBusAxon
-import com.kotato.cqrs.infrastructure.command_bus.spring.AnnotationCommandHandlerDriven
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.spring.config.EnableAxon
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Scope
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit.jupiter.SpringExtension
@@ -43,7 +44,7 @@ class CommandHandlerAnnotationTest {
     }
 
     @EnableAxon
-    @AnnotationCommandHandlerDriven
+    @Import(CqrsConfiguration::class)
     @Scope
     @Configuration
     open class Context {

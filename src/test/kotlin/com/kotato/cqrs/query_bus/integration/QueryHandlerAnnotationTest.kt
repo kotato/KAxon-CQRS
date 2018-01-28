@@ -1,11 +1,11 @@
 package com.kotato.cqrs.query_bus.integration
 
+import com.kotato.cqrs.application.CqrsConfiguration
 import com.kotato.cqrs.domain.query.Query
 import com.kotato.cqrs.domain.query.QueryBus
 import com.kotato.cqrs.domain.query.QueryHandler
 import com.kotato.cqrs.domain.query.ask
 import com.kotato.cqrs.infrastructure.query_bus.QueryBusAxon
-import com.kotato.cqrs.infrastructure.query_bus.spring.AnnotationQueryHandlerDriven
 import com.kotato.cqrs.query_bus.stub.TestQuery
 import org.axonframework.queryhandling.QueryGateway
 import org.axonframework.spring.config.EnableAxon
@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Scope
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit.jupiter.SpringExtension
@@ -46,7 +47,7 @@ class QueryHandlerAnnotationTest {
     }
 
     @EnableAxon
-    @AnnotationQueryHandlerDriven
+    @Import(CqrsConfiguration::class)
     @Scope
     @Configuration
     open class Context {
